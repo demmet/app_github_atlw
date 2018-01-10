@@ -1,7 +1,7 @@
 FROM ruby:2.3.3
 
 RUN apt-get update && \
-    apt-get install -y net-tools build-essential mysql-client
+    apt-get install -y net-tools build-essential mysql-client vim
 
 # Install gems
 RUN mkdir /usr/src/app
