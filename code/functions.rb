@@ -66,5 +66,19 @@ def insert(conn, repo_details)
 
 end
 
+def find_repo(id)
+
+	begin
+		conn = connect
+
+		rs = conn.query("SELECT * FROM Repositorios WHERE id = #{id}")
+		
+		return rs.fetch_row
+	rescue Mysql::Error => e
+	end
+
+end
+
+
 
 

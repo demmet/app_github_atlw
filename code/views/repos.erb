@@ -8,21 +8,18 @@
     <form method="GET" action="/home"><input type="submit" value="Voltar"></form>
   	<h2><center>Listando repositórios da linguagem <%= lang = params['repo'] %></h2>
 
-  	<%
-  	  require 'octokit'
-  	  require 'json'
-  	  
-  	  load './functions.rb'
-			
-
-		%>
 
     <table class='repos_table'>
-      <% repositorios['items'].each do |repo| %>
+      <% repositorios.each do |repo| %>
         <tr>
           <td>Nome do Repositório: </td>
-          <td><%= repo['name'] %></td>
-          <td><input type='button' id='<%= repo['id'] %>' class='show_details' value='Detalhes'></td> 
+          <td><%= repo[:name] %></td>
+          <td>
+            <form method='GET' action="/detalhes/<%= repo[:id] %>">
+              <input type='submit' value='Detalhes'>
+            </form> 
+             
+          </td> 
         </tr>
       <% end %>
 

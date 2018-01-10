@@ -1,0 +1,51 @@
+<html>
+  <head>
+  	
+  </head>
+  <body>
+    <form method="GET" action="/repos/<%= repo[:language] %>"><input type="submit" value="Voltar"></form>
+  	<h2><center>Detalhes do Repositório <%= repo[:name] %></center></h2>
+
+
+    <center>
+      <div>
+        <table>
+          <tr>
+            <td>Id: </td>
+            <td><%= repo[:id] %></td>
+          </tr>
+          <tr>
+            <td>Nome completo: </td>
+            <td><%= repo[:full_name] %></td>
+          </tr>
+          <tr>
+            <td>Descrição: </td>
+            <td><%= repo[:description].to_s %></td>
+          </tr>
+          <tr>
+            <td>Linguagem: </td>
+            <td><%= repo[:language] %></td>
+          </tr>
+          
+          <tr>
+            <td>HTML URL: </td>
+            <td><%= repo[:html_url] %></td>
+          </tr>
+          <tr>
+            <td>Autor: </td>
+            <td><%= repo[:owner_login] %></td>
+          </tr>
+          <tr>
+            <td>URL do Autor: </td>
+            <td><%= repo[:owner_url] %></td>
+          </tr>
+          <tr>
+            <td>Privado? </td>
+            <td><%= repo[:is_private] == true ? "Sim" : "Não" %></td>
+          </tr>
+        </table>
+      </div>
+    </center>
+    
+  </body>
+</html>
