@@ -29,7 +29,7 @@ get '/repos/:repo' do
 
 	conn = connect
 
-  conn.query("CREATE TABLE IF NOT EXISTS Repositorios(id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(20), full_name VARCHAR(50), html_url VARCHAR(200), owner_login VARCHAR(25), owner_url VARCHAR(200), description VARCHAR(300), is_private BOOLEAN, language VARCHAR(20));")
+	conn.query("CREATE TABLE IF NOT EXISTS Repositorios(id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(20), full_name VARCHAR(50), html_url VARCHAR(200), owner_login VARCHAR(25), owner_url VARCHAR(200), description VARCHAR(300), is_private BOOLEAN, language VARCHAR(20))")
 
 	repositorios['items'].each do |repo| 
 		r = get_details(repo)
@@ -83,6 +83,10 @@ get '/connect' do
 
 end
 
+get '/tests' do
+	load 'tests.rb'
+	Tests.new.teste
+end
 
 
 

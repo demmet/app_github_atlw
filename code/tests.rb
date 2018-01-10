@@ -1,16 +1,13 @@
-require 'mysql'
+load 'index.rb'
 
-load 'DBConnect'
+class Tests
 
-begin
-	con = DBConnect.Connect('localhost', 'root', 'example')
-	puts con.get_server_info
+	def initialize
+		
+	end
 
-	rs = con.query 'SELECT VERSION()'
-	puts rs.fetch_row
+	def teste
+		insert(connect, get_details(get_git_repos("Ruby")['items'][0])).to_s
+	end
 
-rescue Mysql::Error => e
-	puts e.error
-ensure
-	con.close if con
 end

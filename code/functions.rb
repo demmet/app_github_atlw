@@ -28,9 +28,6 @@ def connect
 		con.query("use rubydb")
 
 	rescue Mysql::Error => e
-		puts e.error
-	ensure
-		con.close if con
 	end
 
 	return con = Mysql::new('app_db', 'root', 'example', 'rubydb')
@@ -57,11 +54,14 @@ def insert(conn, repo_details)
 
 		rs = conn.query ("SELECT * FROM Repositorios WHERE id = #{repo_details[:id]}")
 		if(rs.fetch_row == nil)
-			return conn.query("INSERT INTO Repositorios(id, name, full_name, html_url, owner_login, owner_url, description, is_private, language) VALUES (#{repo_details[:id]}, '#{repo_details[:name]}', '#{repo_details[:full_name]}', '#{repo_details[:html_url]}', '#{repo_details[:owner_login]}', '#{repo_details[:owner_url]}', '#{repo_details[:description]}', #{repo_details[:is_private]}, '#{repo_details[:language]}')")
+			conn.query("INSERT INTO Repositorios(id, name, full_name, html_url, owner_login, owner_url, description, is_private, language) VALUES (#{repo_details[:id]}, '#{repo_details[:name]}', '#{repo_details[:full_name]}', '#{repo_details[:html_url]}', '#{repo_details[:owner_login]}', '#{repo_details[:owner_url]}', '#{repo_details[:description]}', #{repo_details[:is_private]}, '#{repo_details[:language]}')")
+			return true
 		else
-			return conn.query("UPDATE Repositorios SET name = '#{repo_details[:name]}', full_name = '#{repo_details[:full_name]}', html_url = '#{repo_details[:html_url]}', owner_login = '#{repo_details[:owner_login]}', owner_url = '#{repo_details[:owner_url]}', description = '#{repo_details[:description]}', is_private = #{repo_details[:is_private]}, language = '#{repo_details[:language]}' WHERE id = #{repo_details[:id]}")
+			conn.query("UPDATE Repositorios SET name = '#{repo_details[:name]}', full_name = '#{repo_details[:full_name]}', html_url = '#{repo_details[:html_url]}', owner_login = '#{repo_details[:owner_login]}', owner_url = '#{repo_details[:owner_url]}', description = '#{repo_details[:description]}', is_private = #{repo_details[:is_private]}, language = '#{repo_details[:language]}' WHERE id = #{repo_details[:id]}")
+			return true
 		end
 	rescue Mysql::Error => e
+		return nil
 	end
 
 end

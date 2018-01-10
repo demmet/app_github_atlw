@@ -5,25 +5,26 @@
 		<link rel="stylesheet" href="tests.css" type="text/css" /> 
   </head>
   <body>
-    <form method="GET" action="/home"><input type="submit" value="Voltar"></form>
+    <center><form method="GET" action="/home"><input type="submit" value="Voltar"></form></center>
   	<h2><center>Listando repositórios da linguagem <%= lang = params['repo'] %></h2>
 
+    <center>
+      <table class='repos_table'>
+        <% repositorios.each do |repo| %>
+          <tr>
+            <td>Nome do Repositório: </td>
+            <td><%= repo[:name] %></td>
+            <td>
+              <form method='GET' action="/detalhes/<%= repo[:id] %>">
+                <input type='submit' value='Detalhes'>
+              </form> 
+               
+            </td> 
+          </tr>
+        <% end %>
 
-    <table class='repos_table'>
-      <% repositorios.each do |repo| %>
-        <tr>
-          <td>Nome do Repositório: </td>
-          <td><%= repo[:name] %></td>
-          <td>
-            <form method='GET' action="/detalhes/<%= repo[:id] %>">
-              <input type='submit' value='Detalhes'>
-            </form> 
-             
-          </td> 
-        </tr>
-      <% end %>
-
-    </table>
+      </table>
+    </center>
 
     
   </body>

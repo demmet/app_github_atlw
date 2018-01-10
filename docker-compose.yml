@@ -17,3 +17,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: example
 
+  redis:
+    container_name: app_redis
+    image: redis:alpine
+    ports:
+      - "6379:6379"
