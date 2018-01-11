@@ -19,13 +19,13 @@ Este aplicativo foi desenvolvido como uma avaliação para a empresa Ateliware. 
 
 Clonar o repositório, abrir o terminal e executar os comandos:
 
-- `docker-compose up -d`
-- `docker exec -it app_github bash`
-- `bundle install`
-- `ruby code/index.rb`
+1. `docker-compose up -d`
+1. `docker exec -it app_github bash`
+1. `bundle install` (se necessário)
+1. `ruby code/index.rb`
 
 ### Como executar os testes automatizados
 
-Mesmo procedimento da execução substituindo o último comando por:
+Mesmo procedimento da execução, utilizando o comando:
 
-- `ruby code/app_github_tests.rb`
+1. `ruby code/app_github_tests.rb`
