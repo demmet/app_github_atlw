@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'bundler'
 gem 'rack'
 gem 'rack-test'
 gem 'sinatra'
