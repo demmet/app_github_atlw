@@ -1,5 +1,8 @@
-require 'bundler/setup'
+
 require 'sinatra'
+
+require 'bundler/setup'
+require 'rubygems'
 require 'sinatra/reloader'
 require 'octokit'
 require 'mysql'
@@ -10,6 +13,8 @@ load 'functions.rb'
 
 set :bind, '0.0.0.0'
 use_ssl = true
+
+puts "Iniciando servidor..."
 
 github_repos = { 
 	"ruby" => get_git_repos("ruby"),

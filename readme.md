@@ -17,7 +17,7 @@ Este aplicativo foi desenvolvido como uma avaliação para a empresa Ateliware. 
 
 ## Como iniciar o App
 
-Clonar o repositório, abrir o terminal e executar os comandos:
+Clonar o repositório, executar os comandos abaixo no terminal:
 
 1. `docker-compose up -d`
 1. `docker exec -it app_github bash`
@@ -28,4 +28,4 @@ Clonar o repositório, abrir o terminal e executar os comandos:
 
 Mesmo procedimento da execução, utilizando o comando:
 
-1. `ruby code/app_github_tests.rb`
+`ruby code/app_github_tests.rb`
