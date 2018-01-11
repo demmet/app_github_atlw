@@ -3,6 +3,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'octokit'
 require 'mysql'
+require 'json'
 
 load 'functions.rb'
 
