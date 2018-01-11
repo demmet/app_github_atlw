@@ -3,7 +3,12 @@
   	
   </head>
   <body>
-    <center><form method="GET" action="/repos/<%= repo[:language] %>"><input type="submit" value="Voltar"></form></center>
+    <center>
+      <form method="POST" action="/repos">
+        <input type="hidden" name="repo" value="<%= repo[:language] %>">
+        <input type="submit" value="Voltar">
+      </form>
+    </center>
   	<h2><center>Detalhes do Repositório <%= repo[:name] %></center></h2>
 
 

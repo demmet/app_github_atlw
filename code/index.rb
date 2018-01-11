@@ -19,6 +19,17 @@ github_repos = {
 	"assembly" =>  get_git_repos("assembly")
 }
 
+conn = connect
+
+conn.query("CREATE TABLE IF NOT EXISTS Repositorios(id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(20), full_name VARCHAR(50), html_url VARCHAR(200), owner_login VARCHAR(25), owner_url VARCHAR(200), description VARCHAR(300), is_private BOOLEAN, language VARCHAR(20))")
+
+github_repos.each do |repos| 
+	repos[1]['items'].each do |repo|
+		r = get_details(repo)
+		insert(conn, r)
+	end
+end
+
 get '/welcome' do
   "<center><h4>Welcome!</h4></center>"
 end
@@ -33,26 +44,15 @@ end
 
 post '/repos' do
 
-
-	repositorios = github_repos[params['repo']]
 	repos_detalhes = []
 
-	conn = connect
+	repositorios = github_repos[params['repo'].downcase]
 
-	conn.query("CREATE TABLE IF NOT EXISTS Repositorios(id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(20), full_name VARCHAR(50), html_url VARCHAR(200), owner_login VARCHAR(25), owner_url VARCHAR(200), description VARCHAR(300), is_private BOOLEAN, language VARCHAR(20))")
+	repositorios['items'].each do |repo|
+		r = get_details(repo)
+		repos_detalhes << r
+	end
 
-	#if(repositorios['items'] != nil)
-
-	
-		repositorios['items'].each do |repo| 
-			r = get_details(repo)
-			repos_detalhes << r
-			insert(conn, r)
-		end
-
-	
-	#end
-	
   erb :repos, :locals => { :repositorios => repos_detalhes }
 
 end
