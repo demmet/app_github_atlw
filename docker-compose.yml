@@ -4,16 +4,21 @@ services:
     container_name: app_github
     build: .
     command: bash -c "while [ true ]; do sleep 10; done"
-    volumes:
-      - ./code:/usr/src/app/
     ports:
       - "4567:4567"
+    volumes:
+      - ./code:/usr/src/app
     links:
       - db
+    depends_on:
+      - db
+      - redis
 
   db:
     container_name: app_db
     image: mysql
+    ports:
+      - "5432:5432"
     environment:
       MYSQL_ROOT_PASSWORD: example
 
