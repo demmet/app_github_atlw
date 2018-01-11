@@ -4,11 +4,20 @@ require 'sinatra/reloader'
 require 'octokit'
 require 'mysql'
 require 'json'
+require 'pry-nav'
 
 load 'functions.rb'
 
 set :bind, '0.0.0.0'
 use_ssl = true
+
+github_repos = { 
+	"ruby" => get_git_repos("ruby"),
+	"java" => get_git_repos("java"),
+	"c" =>  get_git_repos("c"),
+	"php" =>  get_git_repos("php"),
+	"assembly" =>  get_git_repos("assembly")
+}
 
 get '/welcome' do
   "<center><h4>Welcome!</h4></center>"
@@ -22,21 +31,27 @@ get '/home' do
   erb :home
 end
 
-get '/repos/:repo' do
+post '/repos' do
 
 
-	repositorios = get_git_repos(params['repo'])
+	repositorios = github_repos[params['repo']]
 	repos_detalhes = []
 
 	conn = connect
 
 	conn.query("CREATE TABLE IF NOT EXISTS Repositorios(id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(20), full_name VARCHAR(50), html_url VARCHAR(200), owner_login VARCHAR(25), owner_url VARCHAR(200), description VARCHAR(300), is_private BOOLEAN, language VARCHAR(20))")
 
-	repositorios['items'].each do |repo| 
-		r = get_details(repo)
-		repos_detalhes << r
-		insert(conn, r)
-	end
+	#if(repositorios['items'] != nil)
+
+	
+		repositorios['items'].each do |repo| 
+			r = get_details(repo)
+			repos_detalhes << r
+			insert(conn, r)
+		end
+
+	
+	#end
 	
   erb :repos, :locals => { :repositorios => repos_detalhes }
 
