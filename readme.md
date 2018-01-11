@@ -21,6 +21,7 @@ Clonar o repositório, abrir o terminal e executar os comandos:
 
 - `docker-compose up -d`
 - `docker exec -it app_github bash`
+- `bundle install`
 - `ruby code/index.rb`
 
 ### Como executar os testes automatizados
