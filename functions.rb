@@ -39,9 +39,8 @@ end
 def connect
 	
 	begin
-
-		con = nil
-
+		return PG.connect(host: 'ec2-54-83-15-95.compute-1.amazonaws.com', dbname: 'df3bdddh35s3g', :user => 'epoqxezleskgfb', 
+        :password => 'dd866c4d5d5357b712ff9eae6261c40f4ec0b94b26fb7abbce9c56cdca9ad69c')
 		if(ENV['DATABASE_URL'] == nil)
 
 			con = PG.connect(host: 'app_db', dbname: 'rubydb', :user => 'postgres', 
