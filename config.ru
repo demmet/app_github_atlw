@@ -1,2 +1,2 @@
-require './tests'
+require './index'
 run Sinatra::Application
