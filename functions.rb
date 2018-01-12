@@ -1,9 +1,9 @@
 require 'net/http'
+require 'json'
+
 
 def get_git_repos(language)
 
-	client = Octokit::Client.new(:login => 'demmet', :password => 'Demeloso123')
-	
   url = 'https://api.github.com/search/repositories?q=language:' + language + '&sort=stars&order=desc'
 	uri = URI(url)
 

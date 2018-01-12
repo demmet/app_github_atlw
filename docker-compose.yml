@@ -7,7 +7,7 @@ services:
     ports:
       - "4567:4567"
     volumes:
-      - ./code:/app
+      - .:/app
     links:
       - db
     depends_on:
