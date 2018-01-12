@@ -50,8 +50,6 @@ def connect
 
 		return con
 	rescue PG::Error => e
-		puts "url: " + ENV['DATABASE_URL']
-		puts e.error
 
 	end
 
@@ -69,9 +67,6 @@ def insert(conn, repo_details)
 
 		rs = conn.query ("SELECT * FROM Repositorios WHERE id = #{repo_details[:id]}")
 		row = nil
-		rs.each do |r|
-			row = r
-		end
 		if(row == nil)
 			conn.query("INSERT INTO Repositorios(id, name, full_name, html_url, owner_login, owner_url, description, is_private, language) VALUES (#{repo_details[:id]}, '#{repo_details[:name]}', '#{repo_details[:full_name]}', '#{repo_details[:html_url]}', '#{repo_details[:owner_login]}', '#{repo_details[:owner_url]}', '#{repo_details[:description]}', #{repo_details[:is_private]}, '#{repo_details[:language]}')")
 			return true
@@ -95,15 +90,17 @@ def insert_all(conn, github_repos)
 end
 
 def find_repo(id)
-
 	begin
 		conn = connect
 
 		rs = conn.query("SELECT * FROM Repositorios WHERE id = #{id}")
 		
-		rs.each do |row|
-			return
+		if(rs.values.length > 0)
+			return rs.values[0]
 		end
+
+		return nil
+		
 	rescue PG::Error => e
 	end
 

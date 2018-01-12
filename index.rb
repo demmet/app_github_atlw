@@ -50,6 +50,7 @@ post '/repos' do
 end
 
 get '/detalhes/:id' do
+	
 	repo = find_repo(params['id'])
 
 	if(repo)
