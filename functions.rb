@@ -45,12 +45,14 @@ def connect
 			con = PG.connect(host: 'app_db', dbname: 'rubydb', :user => 'postgres', 
         :password => 'example')
 		else
-			con = PG.connect(hostaddr: ENV['DATABASE_URL'])
+			con = PG.connect(ENV['DATABASE_URL'])
 		end
 
 		return con
 	rescue PG::Error => e
+		puts "url: " + ENV['DATABASE_URL']
 		puts e.error
+
 	end
 
 end
