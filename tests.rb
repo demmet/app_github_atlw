@@ -11,7 +11,7 @@ class Tests
 	end
 
 	def teste
-		con = connect
+		puts ENV['DATABASE_URL']
 	end
 
 end
