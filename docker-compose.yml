@@ -16,11 +16,13 @@ services:
 
   db:
     container_name: app_db
-    image: mysql
+    image: postgres
     ports:
       - "5432:5432"
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: postgres
+      POSTGRES_DB: rubydb
 
   redis:
     container_name: app_redis

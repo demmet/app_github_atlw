@@ -12,9 +12,9 @@ GEM
     multi_json (1.13.1)
     multipart-post (2.0.0)
     mustermann (1.0.1)
-    mysql (2.9.1)
     octokit (4.8.0)
       sawyer (~> 0.8.0, >= 0.5.3)
+    pg (1.0.0)
     power_assert (1.1.1)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -53,8 +53,8 @@ PLATFORMS
 
 DEPENDENCIES
   minitest
-  mysql (~> 2.9, >= 2.9.1)
   octokit (~> 4.0)
+  pg
   pry-nav
   rack
   rack-test
