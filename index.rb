@@ -11,6 +11,7 @@ set :bind, '0.0.0.0'
 use_ssl = true
 
 puts "Iniciando servidor..."
+binding.pry
 PG.connect(hostaddr: ENV['DATABASE_URL'])
 binding.pry
 github_repos = Repositorios.new.repos
