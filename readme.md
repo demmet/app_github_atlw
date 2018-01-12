@@ -15,7 +15,7 @@ Este aplicativo foi desenvolvido como uma avaliação para a empresa Ateliware. 
 
 - Docker ([Install Docker](https://docs.docker.com/engine/installation/))
 
-## Como iniciar o App
+## Iniciar o App
 
 Clonar o repositório, executar os comandos abaixo no terminal:
 
@@ -24,7 +24,7 @@ Clonar o repositório, executar os comandos abaixo no terminal:
 1. `bundle install` (se necessário)
 1. `ruby code/index.rb`
 
-### Como executar os testes automatizados
+### Executar os testes automatizados
 
 Mesmo procedimento da execução, utilizando o comando:
 

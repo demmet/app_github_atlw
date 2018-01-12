@@ -9,7 +9,7 @@ RUN apt-get -y install postgresql postgresql-client postgresql-contrib
 EXPOSE 5432
 
 # heroku install
-# RUN wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+RUN wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
 # code copy
 RUN mkdir -p /app
