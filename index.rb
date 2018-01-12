@@ -11,9 +11,7 @@ set :bind, '0.0.0.0'
 use_ssl = true
 
 puts "Iniciando servidor..."
-binding.pry
-PG.connect(hostaddr: "postgres://epoqxezleskgfb:dd866c4d5d5357b712ff9eae6261c40f4ec0b94b26fb7abbce9c56cdca9ad69c@ec2-54-83-15-95.compute-1.amazonaws.com:5432/df3bdddh35s3g") 
-binding.pry
+
 github_repos = Repositorios.new.repos
 
 conn = create_table
