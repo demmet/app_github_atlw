@@ -3,6 +3,7 @@ require 'json'
 require 'pg'
 
 
+
 def get_git_repos(language)
 
   url = 'https://api.github.com/search/repositories?q=language:' + language + '&sort=stars&order=desc'
@@ -66,8 +67,7 @@ def insert(conn, repo_details)
 	begin
 
 		rs = conn.query ("SELECT * FROM Repositorios WHERE id = #{repo_details[:id]}")
-		row = nil
-		if(row == nil)
+		if(rs.values.size == 0)
 			conn.query("INSERT INTO Repositorios(id, name, full_name, html_url, owner_login, owner_url, description, is_private, language) VALUES (#{repo_details[:id]}, '#{repo_details[:name]}', '#{repo_details[:full_name]}', '#{repo_details[:html_url]}', '#{repo_details[:owner_login]}', '#{repo_details[:owner_url]}', '#{repo_details[:description]}', #{repo_details[:is_private]}, '#{repo_details[:language]}')")
 			return true
 		else
@@ -75,7 +75,7 @@ def insert(conn, repo_details)
 			return true
 		end
 	rescue PG::Error => e
-		return nil
+		return false
 	end
 
 end
