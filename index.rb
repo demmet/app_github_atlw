@@ -14,7 +14,7 @@ puts "Iniciando servidor..."
 
 github_repos = Repositorios.new.repos
 
-conn = create_table
+conn = connect
 
 puts "Banco de dados configurado..."
 

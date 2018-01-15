@@ -49,6 +49,8 @@ def connect
 			con = PG.connect(ENV['DATABASE_URL'])
 		end
 
+		con.query("CREATE TABLE IF NOT EXISTS Repositorios(id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(20), full_name VARCHAR(50), html_url VARCHAR(200), owner_login VARCHAR(25), owner_url VARCHAR(200), description VARCHAR(300), is_private BOOLEAN, language VARCHAR(20))")
+
 		return con
 	rescue PG::Error => e
 
@@ -56,17 +58,13 @@ def connect
 
 end
 
-def create_table
-	conn = connect
-	conn.query("CREATE TABLE IF NOT EXISTS Repositorios(id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(20), full_name VARCHAR(50), html_url VARCHAR(200), owner_login VARCHAR(25), owner_url VARCHAR(200), description VARCHAR(300), is_private BOOLEAN, language VARCHAR(20))")
-	conn
-end
-
 def insert(conn, repo_details)
 
 	begin
 
 		rs = conn.query ("SELECT * FROM Repositorios WHERE id = #{repo_details[:id]}")
+
+
 		if(rs.values.size == 0)
 			conn.query("INSERT INTO Repositorios(id, name, full_name, html_url, owner_login, owner_url, description, is_private, language) VALUES (#{repo_details[:id]}, '#{repo_details[:name]}', '#{repo_details[:full_name]}', '#{repo_details[:html_url]}', '#{repo_details[:owner_login]}', '#{repo_details[:owner_url]}', '#{repo_details[:description]}', #{repo_details[:is_private]}, '#{repo_details[:language]}')")
 			return true

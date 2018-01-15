@@ -1,137 +1,72 @@
-
-require 'test/unit'
-require 'rack/test'
 require 'pry-nav'
+require 'rspec'
 
 load 'functions.rb'
 load 'Repositorios.rb'
 
-class AppTest < Test::Unit::TestCase
-	include Rack::Test::Methods
 
-  class << self
-    def startup
-      @@repositorios = Repositorios.new
+
+
+RSpec.configure do |config|
+  config.before(:suite) do 
+    @@repositorios = Repositorios.new
+    puts "teste"
+  end
+end
+
+describe 'TestFunctions' do
+
+  describe 'Acessar a API do GitHub e solicitar repositórios' do
+    context "dada uma linguagem dentre (Ruby, C, Java, PHP, Assembly)" do
+      it "retorna um Hash com repositórios referentes à linguagem de entrada" do 
+        expect(@@repositorios.repos['ruby']).to be_a_kind_of(Hash)
+      end
     end
+  end
 
-    def shutdown
-      
+  describe 'solicita a lista dos itens' do
+    context "repositórios carregados" do
+      it "retorna um array" do
+        expect(@@repositorios.repos['ruby']['items']).to be_a_kind_of(Array)
+      end
     end
   end
 
-	def app
-		Sinatra::Application
-	end
-
-  def setup
-    
+  describe 'solicita detalhes de um repositório' do
+    context "array de repositorios recebido" do
+      it "retorna um hash não vazio com os dados" do
+        repos_items = @@repositorios.repos['ruby']['items']
+        repo = repos_items[0]
+        details = get_details(repo)
+        expect(details).to be_a_kind_of(Hash)
+        expect(details).not_to be_empty
+      end
+    end
   end
 
-	#TESTS
-	def test_get_repositorios_ruby
-  	assert_equal("Hash", @@repositorios.repos['ruby'].class.to_s)
+  describe 'solicita conexão ao banco' do
+    context "conexão com o banco ainda não realizada" do
+      it "retorna um objeto não nulo de conexão com o banco de dados" do
+        conn = connect
+        expect(conn).not_to be_nil
+        expect(conn).to be_a_kind_of(PG::Connection)
+      end
+    end
   end
 
-  def test_get_repositorios_c
-		assert_equal("Hash", @@repositorios.repos['c'].class.to_s)
-  end
-
-  def test_get_repositorios_java
-  	assert_equal("Hash", @@repositorios.repos['java'].class.to_s)
-  end
-
-  def test_get_repositorios_php
-		assert_equal("Hash", @@repositorios.repos['php'].class.to_s)
-  end
-
-  def test_get_repositorios_assembly
-  	assert_equal("Hash", @@repositorios.repos['assembly'].class.to_s)
-  end
-
-  def test_get_repositorios_items
-    assert_equal("Array", @@repositorios.repos['ruby']['items'].class.to_s)
-  end
-
-  def test_get_details_repositorio
-    repos_items = @@repositorios.repos['ruby']['items']
-    repo = repos_items[0]
-    details = get_details(repo)
-  	assert_equal("Hash", details.class.to_s)
-  end
-
-  def test_get_details_repositorio_id
-    repos_items = @@repositorios.repos['ruby']['items']
-    repo = repos_items[0]
-    details = get_details(repo)
-    assert_not_nil(details[:id])
-  end
-
-  def test_get_details_repositorio_name
-    repos_items = @@repositorios.repos['ruby']['items']
-    repo = repos_items[0]
-    details = get_details(repo)
-  	assert_not_nil(details[:name])
-  end
-
-  def test_get_details_repositorio_full_name
-  	repos_items = @@repositorios.repos['ruby']['items']
-    repo = repos_items[0]
-    details = get_details(repo)
-    assert_not_nil(details[:full_name])
-  end
-
-  def test_get_details_repositorio_html_url
-  	repos_items = @@repositorios.repos['ruby']['items']
-    repo = repos_items[0]
-    details = get_details(repo)
-    assert_not_nil(details[:html_url])
-  end
-
-  def test_get_details_repositorio_owner_login
-  	repos_items = @@repositorios.repos['ruby']['items']
-    repo = repos_items[0]
-    details = get_details(repo)
-    assert_not_nil(details[:owner_login])
-  end
-
-  def test_get_details_repositorio_owner_url
-  	repos_items = @@repositorios.repos['ruby']['items']
-    repo = repos_items[0]
-    details = get_details(repo)
-    assert_not_nil(details[:owner_url])
-  end
-
-  def test_get_details_repositorio_description
-  	repos_items = @@repositorios.repos['ruby']['items']
-    repo = repos_items[0]
-    details = get_details(repo)
-    assert_not_nil(details[:description])
-  end
-
-  def test_get_details_repositorio_is_private
-  	repos_items = @@repositorios.repos['ruby']['items']
-    repo = repos_items[0]
-    details = get_details(repo)
-    assert_not_nil(details[:is_private])
-  end
-
-  def test_get_details_repositorio_language
-  	repos_items = @@repositorios.repos['ruby']['items']
-    repo = repos_items[0]
-    details = get_details(repo)
-    assert_not_nil(details[:language])
-  end
-
-	def test_connect_db
-    assert_not_nil @conn = connect
-  end
-
-  def test_insert_update_db
-    repos_items = @@repositorios.repos['ruby']['items']
-    repo = repos_items[0]
-    details = get_details(repo)
-  	assert(insert(connect, details))
+  describe 'inserir detalhes de repositório no banco' do
+    context "repositório carregado e detalhes extraídos" do
+      it "retorna true se o repositório for inserido ou atualizado no banco" do
+        repos_items = @@repositorios.repos['ruby']['items']
+        repo = repos_items[0]
+        details = get_details(repo)
+        expect(insert(connect, details)).to be true
+      end
+    end
   end
 
 end
+
+
+
 
