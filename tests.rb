@@ -1,12 +1,21 @@
 require 'pry-nav'
+require 'sinatra'
 
-
+load 'index.rb'
 load 'functions.rb'
 load 'Repositorios.rb'
+#load 'spec_helper.rb'
 
-require "test/unit"
+def app() Sinatra::Application end
 
+describe "Teste GitHub Ateliware - Testes de URL" do
+  it "Deve acessar a página inicial e redirecionar para /home" do
+    get '/'
+    expect(last_response).to be_ok
+  end
+end
 
+=begin
 class TestSimpleNumber < Test::Unit::TestCase
 
 	attribute :wtf
@@ -62,4 +71,4 @@ end
 
 teste = Tests.new
 puts teste.repositorios.repos.length
-
+=end

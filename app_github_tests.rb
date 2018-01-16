@@ -3,9 +3,7 @@ require 'rspec'
 
 load 'functions.rb'
 load 'Repositorios.rb'
-
-
-
+load 'spec_helper.rb'
 
 RSpec.configure do |config|
   config.before(:suite) do 
@@ -13,6 +11,16 @@ RSpec.configure do |config|
     puts "teste"
   end
 end
+
+describe 'TestURLs' do
+  describe "Teste GitHub Ateliware - Testes de URL" do
+    it "Deve acessar a página inicial e redirecionar para /home" do
+      get '/'
+      expect(last_response).to be_ok
+    end
+  end
+end
+
 
 describe 'TestFunctions' do
 

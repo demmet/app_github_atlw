@@ -36,9 +36,12 @@ end
 
 post '/repos' do
 
+	if(params[:repo] == nil)
+		redirect '/home'
+	end
 	repos_detalhes = []
 
-	repositorios = github_repos[params['repo'].downcase]
+	repositorios = github_repos[params[:repo].downcase]
 
 	repositorios['items'].each do |repo|
 		r = get_details(repo)

@@ -10,3 +10,4 @@ gem "octokit", "~> 4.0"
 gem 'minitest'
 gem 'pry-nav'
 gem 'rspec'
+gem 'capybara'

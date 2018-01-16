@@ -90,8 +90,11 @@ end
 def find_repo(id)
 	begin
 		conn = connect
-
-		rs = conn.query("SELECT * FROM Repositorios WHERE id = #{id}")
+		if(id == 0)
+			rs = conn.query("SELECT * FROM Repositorios")
+		else 
+			rs = conn.query("SELECT * FROM Repositorios WHERE id = #{id}")
+		end
 		
 		if(rs.values.length > 0)
 			return rs.values[0]
