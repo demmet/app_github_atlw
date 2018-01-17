@@ -16,7 +16,7 @@ class AppDb
 										html_url VARCHAR(200),
 										owner_login VARCHAR(25),
 										owner_url VARCHAR(200),
-										description VARCHAR(300),
+										description VARCHAR(500),
 										is_private BOOLEAN,
 										language VARCHAR(20))')
 
@@ -35,7 +35,6 @@ class AppDb
 
 		rescue PG::Error => e
 			puts e.error
-			return nil
 		end
 
 	end
@@ -103,6 +102,7 @@ class AppDb
 		
 			
 		rescue PG::Error => e
+			puts e.error
 		end
 
 	end

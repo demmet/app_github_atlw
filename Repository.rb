@@ -13,6 +13,8 @@ class Repository
 		@owner_login = repository['owner']['login']
 		@owner_url = repository['owner']['html_url']
 		@description = repository['description']
+		@description = @description.gsub("\"", "\"\"").
+			gsub("'", "''").force_encoding(Encoding::UTF_8) unless description.nil?
 		@is_private = repository['private']
 		@language = repository['language']
 	end

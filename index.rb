@@ -54,10 +54,10 @@ class AppGithubAtlw < Sinatra::Base
 			@repositories[:java] << Repository.new(repository)
 		end
 
-		repositories_by_language = api.get_language_repositories("c")
+		repositories_by_language = api.get_language_repositories("php")
 
 		repositories_by_language['items'].each do |repository|
-			@repositories[:c] << Repository.new(repository)
+			@repositories[:php] << Repository.new(repository)
 		end
 
 		repositories_by_language = api.get_language_repositories("assembly")
