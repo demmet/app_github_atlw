@@ -8,7 +8,7 @@ Este aplicativo foi desenvolvido como uma avaliação para a empresa Ateliware. 
 - GitHub API;
 - Ruby e framework Sinatra;
 - MySQL;
-- Testes automatizados;
+- Testes automatizados (RSpec e Capybara);
 - Heroku deployment;
 
 ## Requisitos para executar o App
@@ -22,10 +22,8 @@ Clonar o repositório, executar os comandos abaixo no terminal:
 1. `docker-compose up -d`
 1. `docker exec -it app_github bash`
 1. `bundle install` (se necessário)
-1. `ruby code/index.rb`
+1. `rackup config.ru`
 
 ### Executar os testes automatizados
 
-Mesmo procedimento da execução, utilizando o comando:
-
-`ruby code/app_github_tests.rb`
+Os testes automatizados utilizando RSpec e Capybara estão em desenvolvimento.

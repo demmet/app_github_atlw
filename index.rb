@@ -1,84 +1,113 @@
 
-require 'sinatra'
+require 'sinatra/base'
 require 'sinatra/reloader'
 require 'octokit'
 require 'pry-nav'
 
-load 'functions.rb'
-load 'Repositorios.rb'
+require_relative 'AppDb'
+require_relative 'AppGithubApi'
+require_relative 'Repository'
 
-set :bind, '0.0.0.0'
-use_ssl = true
+class AppGithubAtlw < Sinatra::Base
 
-puts "Iniciando servidor..."
+	set :root, File.dirname(__FILE__)
+	set :bind, '0.0.0.0'
 
-github_repos = Repositorios.new.repos
+	configure :development do
+    register Sinatra::Reloader
+  end
 
-conn = connect
+	def initialize
+		super
+		puts "Iniciando servidor..."
 
-puts "Banco de dados configurado..."
+		@db = AppDb.new
 
-insert_all(conn, github_repos)
+		puts "Banco de dados configurado..."
 
-puts "Repositórios carregados e armazenados no banco de dados... Enjoy!"
+		api = AppGithubApi.new
 
-get '/welcome' do
-  "<center><h4>Welcome!</h4></center>"
-end
-
-get '/' do
-  redirect '/home'
-end
-
-get '/home' do
-  erb :home
-end
-
-post '/repos' do
-
-	if(params[:repo] == nil)
-		redirect '/home'
-	end
-	repos_detalhes = []
-
-	repositorios = github_repos[params[:repo].downcase]
-
-	repositorios['items'].each do |repo|
-		r = get_details(repo)
-		repos_detalhes << r
-	end
-
-  erb :repos, :locals => { :repositorios => repos_detalhes }
-
-end
-
-get '/detalhes/:id' do
-	
-	repo = find_repo(params['id'])
-
-	if(repo)
-		repo_hash = {
-			id: repo[0],
-			name: repo[1],
-			full_name: repo[2],
-			html_url: repo[3],
-			owner_login: repo[4],
-			owner_url: repo[5],
-			description: repo[6].force_encoding("utf-8"),
-			is_private: repo[7],
-			language: repo[8]
+		@repositories = 
+		{
+			ruby: [],
+			c: [],
+			java: [],
+			php: [],
+			assembly: []
 		}
 
-		erb :detalhes, :locals => { :repo => repo_hash }
-	else
-		redirect '/home'
+		repositories_by_language = api.get_language_repositories("ruby")
+
+		repositories_by_language['items'].each do |repository|
+			@repositories[:ruby] << Repository.new(repository)
+		end
+
+		repositories_by_language = api.get_language_repositories("c")
+
+		repositories_by_language['items'].each do |repository|
+			@repositories[:c] << Repository.new(repository)
+		end
+
+		repositories_by_language = api.get_language_repositories("java")
+
+		repositories_by_language['items'].each do |repository|
+			@repositories[:java] << Repository.new(repository)
+		end
+
+		repositories_by_language = api.get_language_repositories("c")
+
+		repositories_by_language['items'].each do |repository|
+			@repositories[:c] << Repository.new(repository)
+		end
+
+		repositories_by_language = api.get_language_repositories("assembly")
+
+		repositories_by_language['items'].each do |repository|
+			@repositories[:assembly] << Repository.new(repository)
+		end
+		
+		@db.insert_all(@repositories[:ruby])
+		@db.insert_all(@repositories[:c])
+		@db.insert_all(@repositories[:java])
+		@db.insert_all(@repositories[:php])
+		@db.insert_all(@repositories[:assembly])
+
+		puts "Repositórios carregados e armazenados no banco de dados... Enjoy!"
+
 	end
+	
+
+	get '/welcome' do
+	  "<center><h4>Welcome!</h4></center>"
+	end
+
+	get '/' do
+	  redirect '/home'
+	end
+
+	get '/home' do
+	  erb :home
+	end
+
+	post '/repos' do
+
+		if(params[:repo].nil?)
+			redirect '/home'
+		end
+		
+	  erb :repos, :locals => { :repositories => @repositories[params['repo'].downcase.to_sym]}
+
+	end
+
+	get '/detalhes/:id' do
+		
+		repository = @db.find_repo(params['id'])
+		
+		if(repository)
+			erb :detalhes, :locals => { :repository => repository }
+		else
+			redirect '/home'
+		end
+	end
+
 end
-
-get '/tests' do
-	load 'tests.rb'
-	Tests.new.teste
-end
-
-
-

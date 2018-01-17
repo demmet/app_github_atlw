@@ -4,12 +4,12 @@
   </head>
   <body>
     <center>
-      <form method="POST" action="/repos">
-        <input type="hidden" name="repo" value="<%= repo[:language] %>">
-        <input type="submit" value="Voltar">
+      <form method='POST' action='/repos'>
+        <input type='hidden' name='repo' value='<%= repository['language'] %>'>
+        <input type='submit' value='Voltar'>
       </form>
     </center>
-  	<h2><center>Detalhes do Repositório <%= repo[:name] %></center></h2>
+  	<h2><center>Detalhes do Repositório <%= repository['name'] %></center></h2>
 
 
     <center>
@@ -17,36 +17,36 @@
         <table>
           <tr>
             <td>Id: </td>
-            <td><%= repo[:id] %></td>
+            <td><%= repository['id'] %></td>
           </tr>
           <tr>
             <td>Nome completo: </td>
-            <td><%= repo[:full_name] %></td>
+            <td><%= repository['full_name'] %></td>
           </tr>
           <tr>
             <td>Descrição: </td>
-            <td><%= repo[:description].to_s %></td>
+            <td><%= repository['description'].to_s %></td>
           </tr>
           <tr>
             <td>Linguagem: </td>
-            <td><%= repo[:language] %></td>
+            <td><%= repository['language'] %></td>
           </tr>
           
           <tr>
             <td>HTML URL: </td>
-            <td><%= repo[:html_url] %></td>
+            <td><%= repository['html_url'] %></td>
           </tr>
           <tr>
             <td>Autor: </td>
-            <td><%= repo[:owner_login] %></td>
+            <td><%= repository['owner_login'] %></td>
           </tr>
           <tr>
             <td>URL do Autor: </td>
-            <td><%= repo[:owner_url] %></td>
+            <td><%= repository['owner_url'] %></td>
           </tr>
           <tr>
             <td>Privado? </td>
-            <td><%= repo[:is_private] == true ? "Sim" : "Não" %></td>
+            <td><%= repository['is_private'] == 't' ? 'Sim' : 'Não' %></td>
           </tr>
         </table>
       </div>
