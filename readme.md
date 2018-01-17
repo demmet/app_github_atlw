@@ -27,6 +27,6 @@ Clone the repository and execute the commands that follows:
 
 ### How to run the tests
 
-Same procedure as if running the app, but run:
+Same procedure as if running the app, but run the command:
 
-4. `rspec` instead of `rackup ...`
+4. `rspec` instead
