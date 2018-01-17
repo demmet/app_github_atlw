@@ -1,29 +1,32 @@
 # App Github Atlw
 
-O aplicativo acessa a API do GitHub, busca e exibe informações sobre repositórios que utilizam as linguagens Ruby, Java, C, PHP e Assembly e armazena as informações coletadas em um banco de dados MySQL.
+This app was developed in Ruby and it access the GitHub API, retrieves data from repositories that utilizes the languages: Ruby, Java, C, PHP and Assembly, displays relevant details from the repositories and stores them in a PostgreSQL database.
 
-Este aplicativo foi desenvolvido como uma avaliação para a empresa Ateliware. Conceitos/ferramentas utilizados:
+It was developed as a test for Ateliware company.
+Concepts, tools and knowledges utilized:
 - Docker containers;
-- Controle de versões Git;
+- Git version control;
 - GitHub API;
-- Ruby e framework Sinatra;
-- MySQL;
-- Testes automatizados (RSpec e Capybara);
+- Ruby language with Sinatra Framework;
+- PostgreSQL DBMS;
+- Automated tests with RSpec and Capybara;
 - Heroku deployment;
 
-## Requisitos para executar o App
+## App requirements
 
 - Docker ([Install Docker](https://docs.docker.com/engine/installation/))
 
-## Iniciar o App
+## How to run the app
 
-Clonar o repositório, executar os comandos abaixo no terminal:
+Clone the repository and execute the commands that follows:
 
 1. `docker-compose up -d`
 1. `docker exec -it app_github bash`
-1. `bundle install` (se necessário)
+1. `bundle install` (if necessary)
 1. `rackup config.ru`
 
-### Executar os testes automatizados
+### How to run the tests
 
-Os testes automatizados utilizando RSpec e Capybara estão em desenvolvimento.
+Same procedure as if running the app, but run:
+
+4. `rspec` instead of `rackup ...`

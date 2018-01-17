@@ -1,9 +1,9 @@
 require 'pry-nav'
 require 'rspec'
 
-load 'functions.rb'
-load 'Repositorios.rb'
-load 'spec_helper.rb'
+require_relative 'AppDb.rb'
+require_relative 'Repositorios.rb'
+require_relative 'spec_helper.rb'
 
 RSpec.configure do |config|
   config.before(:suite) do 

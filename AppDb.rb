@@ -107,5 +107,14 @@ class AppDb
 
 	end
 
+	def get_random_repository
+		begin
+			rs = @con.query("SELECT * FROM Repository ORDER BY random() LIMIT 1;")
+			rs.first
+		rescue PG::Error => e
+			puts e.error
+		end
+	end
+
 
 end
